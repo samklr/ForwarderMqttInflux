@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-export JAR_HOME="/home/samklr/code2/appmqtt/target/scala-2-11/app-mqtt-assembly-1.0.jar"
-
 sbt/sbt assembly
+
+export JAR_HOME="target/scala-2-11/app-mqtt-assembly-1.0.jar"
 
 export GC_OPTIONS="-XX:+UseG1GC"
 
