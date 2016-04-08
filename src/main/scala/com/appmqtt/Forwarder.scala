@@ -1,7 +1,5 @@
 package com.appmqtt
 
-import java.util
-
 import com.typesafe.config.ConfigFactory
 import org.eclipse.paho.client.mqttv3._
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
@@ -10,17 +8,12 @@ import org.influxdb.{InfluxDB, InfluxDBFactory}
 import org.influxdb.dto.BatchPoints
 
 
-/**
-  * Created by @samklr on 12/02/16.
-  **/
-
 object Forwarder {
 
   val config = ConfigFactory.load
 
   //Init Influx
   var influx : Option[InfluxDB] = None
-
 
   def main(args: Array[String]): Unit = {
 
@@ -57,11 +50,9 @@ object Forwarder {
         println("Lost Connection" + cause)
       }
 
-      override def deliveryComplete(token: IMqttDeliveryToken): Unit = {
-
-      }
+      override def deliveryComplete(token: IMqttDeliveryToken): Unit = {   }
     }
-
+    
     //Set up callback for MqttClient
     brokerClient.setCallback(callback)
 
@@ -124,14 +115,12 @@ object Forwarder {
                                         .field("event",content)
                                         .build
       //val point2 .....
-
       //TODO Batch Multiple Points before Flushing to DB
-
       batchPoints.point(point)
 
       influx match {
         case Some(influxdb) => influxdb.write(batchPoints)
-        case None => println("Not connected to Influx ... Dlushed to /dev/null")
+        case None => println("Not connected to Influx ... Flushed to /dev/null")
       }
 
       //influx.write(batchPoints)
